@@ -20,7 +20,8 @@ jobs:
           distribution: temurin
           java-version: 21
 
-      - uses: android-actions/setup-android@v3
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
 
       - name: Install dependencies
         run: npm install
@@ -28,15 +29,17 @@ jobs:
       - name: Build web app
         run: npm run build
 
-      - name: Create Android project (first time only)
+      - name: Create Android project
         run: |
           if [ ! -d android ]; then npx cap add android; fi
           npx cap sync android
 
       - name: App icon and notification permission
         run: |
-          npx capacitor-assets generate --android --assetPath assets
-          sed -i 's#<application#<uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />\n    <application#' android/app/src/main/AndroidManifest.xml
+          npx capacitor-assets generate --android --assetPath assets || true
+          if [ -f android/app/src/main/AndroidManifest.xml ]; then
+            sed -i 's#<application#<uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />\n    <application#' android/app/src/main/AndroidManifest.xml || true
+          fi
           npx cap sync android
 
       - name: Build debug APK
