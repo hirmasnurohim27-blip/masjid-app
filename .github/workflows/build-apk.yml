@@ -29,8 +29,9 @@ jobs:
           mv $HOME/android-sdk/cmdline-tools/cmdline-tools/* $HOME/android-sdk/cmdline-tools/latest/
           rm -rf $HOME/android-sdk/cmdline-tools/cmdline-tools sdk-tools.zip
           
-          # Set environment variables
+          # Set environment variables (Hanya gunakan ANDROID_HOME dan ekspor ke ANDROID_SDK_ROOT)
           echo "ANDROID_HOME=$HOME/android-sdk" >> $GITHUB_ENV
+          echo "ANDROID_SDK_ROOT=$HOME/android-sdk" >> $GITHUB_ENV
           echo "$HOME/android-sdk/cmdline-tools/latest/bin" >> $GITHUB_PATH
           echo "$HOME/android-sdk/platform-tools" >> $GITHUB_PATH
 
