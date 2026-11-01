@@ -1,0 +1,15 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Semua orang boleh MEMBACA (aplikasi publik).
+    // Hanya akun admin yang emailnya tercantum di bawah boleh MENGUBAH.
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email in ['GANTI_DENGAN_EMAIL_ADMIN@gmail.com'];
+    }
+    match /{document=**} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+  }
+}

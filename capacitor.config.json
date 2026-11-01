@@ -1,0 +1,6 @@
+{
+  "appId": "id.masjid.alkautsar",
+  "appName": "Masjid Al-Kautsar",
+  "webDir": "dist",
+  "server": { "androidScheme": "https" }
+}
